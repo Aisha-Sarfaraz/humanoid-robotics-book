@@ -1,41 +1,42 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version Change: 0.0.0 → 1.0.0
+Version Change: 1.0.0 → 1.1.0
 Ratification Date: 2025-12-05
-Last Amended: 2025-12-05
+Last Amended: 2025-12-06
 
-Modified Principles:
-- NEW: Academic Integrity (Primary Source Verification, Zero Plagiarism Tolerance, Intellectual Honesty, Peer Review Standards)
-- NEW: Educational Excellence (Clarity First, Pedagogical Structure, Practical Application, Engagement)
-- NEW: Reproducibility (Citation Traceability, Code Examples, Data Transparency, Version Control)
-- NEW: Technical Rigor (Accuracy, Currency, Depth, Scope Management)
+Amendment Summary (v1.1.0):
+- ENHANCED: Educational Excellence principle - replaced vague "Engagement" with measurable "Engagement Standards"
+- NEW: Engagement Metrics section - quantifiable interaction requirements (code examples, visual aids, learning checks)
+- NEW: Pedagogical Structure section - learning objectives, Bloom's taxonomy, concept mapping
+- ENHANCED: Quality Assurance - added Pedagogical Completeness and Pedagogical Verification checklists
+- ENHANCED: Success Metrics - added Pedagogical Targets with 6 new quantitative measures
+- IMPROVED: Qualitative Measures - replaced subjective criteria with verifiable standards
 
-Added Sections:
-- Content Standards (Writing Quality, Citation Requirements)
-- Technical Specifications (Document Structure, Format Requirements, Docusaurus Configuration)
-- Development Workflow (Phase 1-4: Planning, Writing, Review & Refinement, Deployment)
-- Quality Assurance Checklist (Pre-Submission Requirements, Content Verification)
-- Prohibited Practices (Absolutely Forbidden, Discouraged Practices)
-- Source Evaluation Criteria (Peer-Reviewed Articles, Conference Proceedings, Technical Reports)
-- Success Metrics (Quantitative Measures, Qualitative Measures)
-- Maintenance & Updates (Post-Launch Responsibilities, Version Control Standards)
-- Legal & Ethical Compliance (Copyright & Licensing, Academic Ethics)
-- Tool-Specific Guidelines (Claude Code Usage, Spec-Kit Plus Integration, GitHub Workflow)
+Detailed Changes:
+- Educational Excellence (line 73): "Engagement" → "Engagement Standards" (with reference to Content Standards)
+- Content Standards: Added "Engagement Metrics" subsection (lines 133-143)
+- Content Standards: Added "Pedagogical Structure" subsection (lines 145-159)
+- Quality Assurance: Added "Pedagogical Completeness" checklist (lines 242-249)
+- Quality Assurance: Added "Pedagogical Verification" checklist (lines 282-289)
+- Success Metrics: Added "Pedagogical Targets" section (lines 363-370)
+- Qualitative Measures: Replaced "Pedagogical Value" with testable "Learning Progression" (line 376)
 
 Templates Requiring Updates:
-✅ plan-template.md - Reviewed (no changes needed - Constitution Check section already flexible)
-✅ spec-template.md - Reviewed (no changes needed - compatible with academic content structure)
-✅ tasks-template.md - Reviewed (no changes needed - task structure supports documentation workflows)
-✅ Command files - None requiring updates (commands are agent-agnostic)
+⚠️ Consider reviewing plan-template.md for learning objectives checklist
+⚠️ Consider reviewing spec-template.md for Bloom's taxonomy mapping section
+✅ tasks-template.md - No changes needed
 
 Follow-up TODOs:
-- None - all placeholders filled with concrete values
+- Consider creating pedagogical review checklist tool
+- Document Bloom's taxonomy classification methodology
+- Create example concept dependency map template
 
-Rationale for MAJOR version (1.0.0):
-- Initial constitution ratification for new project
-- Establishes foundational principles and governance
-- Defines complete development workflow and standards
+Rationale for MINOR version (1.1.0):
+- Backward-compatible enhancement (doesn't break existing content)
+- Adds measurable specifications to existing Educational Excellence principle
+- Transforms subjective standards into quantifiable, testable metrics
+- No changes to core principles or governance structure
 ==================
 -->
 
@@ -70,7 +71,7 @@ Rationale for MAJOR version (1.0.0):
 - **Clarity First**: Content MUST be accessible to readers with computer science backgrounds
 - **Pedagogical Structure**: MUST follow logical progression from foundational to advanced concepts
 - **Practical Application**: MUST balance theory with hands-on, reproducible examples
-- **Engagement**: MUST maintain academic rigor while keeping content compelling
+- **Engagement Standards**: MUST meet quantifiable interaction and learning assessment metrics (see Content Standards)
 
 **Rationale**: Educational content that fails to engage or educate effectively wastes student time and undermines learning objectives. Clear structure and practical examples ensure knowledge transfer.
 
@@ -129,6 +130,34 @@ Rationale for MAJOR version (1.0.0):
   - 1-2 authors: (Smith & Jones, 2023)
   - 3+ authors: (Smith et al., 2023)
 - **Reference List**: Complete bibliographic information at end of each chapter
+
+### Engagement Metrics
+
+**Requirements**:
+
+- **Practical Examples**: Minimum 2 code examples per 1,000 words
+- **Visual Aids**: Minimum 1 diagram/figure per major concept
+- **Learning Checks**: End-of-section questions or exercises (minimum 3 per chapter)
+- **Interactive Elements**: Code demonstrations must be executable and testable
+- **Real-World Applications**: Each major concept must include practical use case
+
+**Rationale**: Quantifiable engagement metrics ensure content moves beyond passive reading to active learning. Students retain knowledge better through practical application and self-assessment.
+
+### Pedagogical Structure
+
+**Requirements**:
+
+- **Concept Dependency Map**: Document prerequisite relationships between sections in each chapter introduction
+- **Learning Objectives**: Explicit, measurable objectives at chapter start (minimum 3 per chapter)
+- **Bloom's Taxonomy Balance**:
+  - Remembering: 20% (definitions, terminology)
+  - Understanding: 30% (explanations, comparisons)
+  - Applying: 30% (code examples, exercises)
+  - Analyzing: 20% (debugging, optimization, design choices)
+- **Progressive Complexity**: Each section builds on previous knowledge with explicit references
+- **Assessment Alignment**: Learning checks must map directly to stated learning objectives
+
+**Rationale**: Structured pedagogical design ensures coherent learning progression and enables students to self-assess their mastery. Bloom's taxonomy balance prevents overemphasis on rote memorization while maintaining foundational knowledge.
 
 ## Technical Specifications
 
@@ -211,6 +240,15 @@ Rationale for MAJOR version (1.0.0):
 - All citations in APA format
 - Complete reference list
 
+**Pedagogical Completeness**:
+
+- Minimum 2 code examples per 1,000 words
+- Minimum 1 diagram/figure per major concept
+- Minimum 3 learning checks per chapter
+- Learning objectives stated for each chapter (minimum 3)
+- Concept dependency map included in chapter introductions
+- Bloom's taxonomy balance verified across content
+
 **Quality Gates**:
 
 - Plagiarism check result: 0%
@@ -241,6 +279,15 @@ Rationale for MAJOR version (1.0.0):
 - Section numbering sequential
 - Cross-references accurate
 - Index/glossary complete (if included)
+
+**Pedagogical Verification**:
+
+- Learning objectives align with chapter content
+- Learning checks map to stated objectives
+- Code examples are executable and tested
+- Concept dependencies documented and accurate
+- Bloom's taxonomy distribution meets 20/30/30/20 target
+- Visual aids appropriately support explanations
 
 ## Prohibited Practices
 
@@ -314,15 +361,24 @@ Rationale for MAJOR version (1.0.0):
 - **Load Performance**: < 3 seconds page load time
 - **Accessibility Score**: 95%+ on Lighthouse audit
 
+**Pedagogical Targets**:
+
+- **Code Example Density**: Minimum 2 examples per 1,000 words
+- **Visual Aid Density**: Minimum 1 diagram/figure per major concept
+- **Learning Objectives**: Minimum 3 per chapter, all measurable
+- **Learning Checks**: Minimum 3 per chapter, aligned with objectives
+- **Bloom's Balance**: 20% remembering, 30% understanding, 30% applying, 20% analyzing (±5% tolerance)
+- **Concept Maps**: Complete prerequisite documentation in 100% of chapter introductions
+
 ### Qualitative Measures
 
 **Assessment Criteria**:
 
-- **Pedagogical Value**: Clear learning progression
+- **Learning Progression**: Concept dependencies form directed acyclic graph with no circular prerequisites
 - **Technical Accuracy**: Verifiable against primary sources
 - **Professional Presentation**: Publication-ready formatting
-- **Reproducibility**: Independent verification possible
-- **Contribution**: Fills gap in existing educational materials
+- **Reproducibility**: Independent verification possible with documented environment/dependencies
+- **Educational Impact**: Addresses documented gap in existing materials or improves upon existing pedagogy
 
 ## Maintenance & Updates
 
@@ -452,4 +508,4 @@ This constitution represents the highest authority for project governance. When 
 
 ---
 
-**Version**: 1.0.0 | **Ratified**: 2025-12-05 | **Last Amended**: 2025-12-05
+**Version**: 1.1.0 | **Ratified**: 2025-12-05 | **Last Amended**: 2025-12-06
