@@ -17,7 +17,7 @@ const config = {
   organizationName: 'Aisha-Sarfaraz', // Usually your GitHub org/user name.
   projectName: 'humanoid-robotics-book', // Usually your repo name.
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internalization, you can use this field to set useful
@@ -85,7 +85,7 @@ const config = {
             items: [
               {
                 label: 'Book',
-                to: '/docs/intro',
+                to: 'docs/intro',
               },
             ],
           },

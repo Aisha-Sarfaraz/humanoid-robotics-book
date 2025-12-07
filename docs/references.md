@@ -161,4 +161,4 @@ These resources serve as primary references for students implementing lab exerci
 
 **End of References**
 
-[Return to Table of Contents](/)
+[Return to Table of Contents](./intro)

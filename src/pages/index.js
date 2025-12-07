@@ -47,7 +47,7 @@ function HeroSection() {
           </p>
 
           <div className="cta-buttons">
-            <Link to="/docs/intro" className="btn btn-primary">
+            <Link to="docs/intro" className="btn btn-primary">
               Start Learning →
             </Link>
             <a
@@ -150,25 +150,25 @@ function ModulesSection() {
       number: '01',
       title: 'The Robotic Nervous System (ROS 2)',
       description: 'Master middleware for robot control. Nodes, topics, services, URDF modeling. Bridge Python AI to ROS controllers.',
-      link: '/docs/chapter-04/module-ros2'
+      link: 'docs/chapter-04/module-ros2'
     },
     {
       number: '02',
       title: 'The Digital Twin (Gazebo & Unity)',
       description: 'Physics simulation and environments. Gravity, collisions, sensors (LiDAR, cameras, IMUs), high-fidelity rendering.',
-      link: '/docs/chapter-04/module-simulation'
+      link: 'docs/chapter-04/module-simulation'
     },
     {
       number: '03',
       title: 'The AI-Robot Brain (NVIDIA Isaac™)',
       description: 'Advanced perception and training. Photorealistic simulation, synthetic data, VSLAM, bipedal path planning.',
-      link: '/docs/chapter-04/module-isaac'
+      link: 'docs/chapter-04/module-isaac'
     },
     {
       number: '04',
       title: 'Vision-Language-Action (VLA)',
       description: 'LLMs meet robotics. Voice-to-action with Whisper, cognitive planning with GPT, autonomous task execution.',
-      link: '/docs/chapter-04/module-vla'
+      link: 'docs/chapter-04/module-vla'
     }
   ];
 
@@ -256,7 +256,7 @@ function CTASection() {
           to teaching Physical AI and humanoid robotics.
         </p>
         <div className="cta-buttons" style={{ justifyContent: 'center' }}>
-          <Link to="/docs/intro" className="btn btn-primary">
+          <Link to="docs/intro" className="btn btn-primary">
             Start Reading
           </Link>
           <Link

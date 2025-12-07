@@ -251,4 +251,4 @@ All core assignments completable remotely via simulation. Students needing accom
 
 **End of Appendices**
 
-Return to [Table of Contents](/) or continue to [References](/references).
+Return to [Table of Contents](./intro) or continue to [References](./references).
