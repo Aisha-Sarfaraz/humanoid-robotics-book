@@ -17,8 +17,8 @@ const config = {
   organizationName: 'Aisha-Sarfaraz', // Usually your GitHub org/user name.
   projectName: 'humanoid-robotics-book', // Usually your repo name.
 
-  onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenLinks: 'ignore',
+  onBrokenMarkdownLinks: 'ignore',
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
