@@ -8,13 +8,13 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://your-username.github.io',
+  url: 'https://aisha-sarfaraz.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/humanoid-robotics-book/',
 
   // GitHub pages deployment config.
-  organizationName: 'your-username', // Usually your GitHub org/user name.
+  organizationName: 'Aisha-Sarfaraz', // Usually your GitHub org/user name.
   projectName: 'humanoid-robotics-book', // Usually your repo name.
 
   onBrokenLinks: 'throw',
@@ -37,7 +37,7 @@ const config = {
           routeBasePath: 'docs',
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://github.com/your-username/humanoid-robotics-book/tree/main/',
+          editUrl: 'https://github.com/Aisha-Sarfaraz/humanoid-robotics-book/tree/main/',
         },
         blog: false,
         theme: {
@@ -71,7 +71,7 @@ const config = {
             label: 'Book',
           },
           {
-            href: 'https://github.com/your-username/humanoid-robotics-book',
+            href: 'https://github.com/Aisha-Sarfaraz/humanoid-robotics-book',
             label: 'GitHub',
             position: 'right',
           },
@@ -94,7 +94,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/your-username/humanoid-robotics-book',
+                href: 'https://github.com/Aisha-Sarfaraz/humanoid-robotics-book',
               },
             ],
           },

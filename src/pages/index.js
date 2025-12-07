@@ -260,7 +260,7 @@ function CTASection() {
             Start Reading
           </Link>
           <Link
-            to="https://github.com/panaversity/spec-kit-plus"
+            to="https://github.com/Aisha-Sarfaraz/humanoid-robotics-book"
             className="btn btn-secondary"
           >
             View GitHub
