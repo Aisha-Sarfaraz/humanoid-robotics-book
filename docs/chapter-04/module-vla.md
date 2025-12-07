@@ -310,7 +310,7 @@ ros2 run my_robot_pkg clip_grounding_node --ros-args \
 ### ✅ Assessment Checklist - Week 1
 
 - [ ] CLIP model loads and processes images in under 200ms
-- [ ] Visual grounding detects objects with >70% accuracy on test queries
+- [ ] Visual grounding detects objects with over 70% accuracy on test queries
 - [ ] Non-maximum suppression correctly removes duplicate detections
 - [ ] Node publishes Detection2DArray messages at camera frame rate
 - [ ] Zero-shot queries work without retraining (test with novel objects)
@@ -834,7 +834,7 @@ Response: "Got it, executing: grasp red cup at (x: 0.45, y: 0.32)"
 - [ ] Prompt engineering constrains output to defined primitives
 - [ ] Conversational parser handles at least 3 types of ambiguity
 - [ ] Error handling gracefully recovers from LLM API failures
-- [ ] Task executor successfully runs multi-step plans (>80% success rate)
+- [ ] Task executor successfully runs multi-step plans (over 80% success rate)
 
 ---
 
@@ -1246,15 +1246,15 @@ ros2 run my_robot_pkg vla_control_node --ros-args \
 2. Train for 50k steps with AdamW optimizer
 3. Evaluate on held-out tasks
 
-**Success Metric**: Model achieves >60% success rate on pick-and-place validation tasks.
+**Success Metric**: Model achieves over 60% success rate on pick-and-place validation tasks.
 
 ### ✅ Assessment Checklist - Week 3
 
-- [ ] VLA model forward pass completes in <100ms
+- [ ] VLA model forward pass completes in under 100ms
 - [ ] Multimodal fusion correctly combines vision, language, and proprioception
 - [ ] Discretized action outputs map to valid continuous actions
 - [ ] Data collection pipeline records synchronized observations and actions
-- [ ] Fine-tuned model outperforms random baseline by >3x
+- [ ] Fine-tuned model outperforms random baseline by more than 3x
 - [ ] Sim-to-real gap analysis completed (domain randomization helps?)
 
 ---
@@ -1346,9 +1346,9 @@ User: "Go to the kitchen and grab the red mug"
 
 | Component | Weight | Criteria |
 |-----------|--------|----------|
-| **Voice Interface** | 15% | Transcription accuracy >90%, handles background noise |
+| **Voice Interface** | 15% | Transcription accuracy over 90%, handles background noise |
 | **Task Planning** | 20% | LLM generates valid, safe action sequences |
-| **Visual Grounding** | 20% | CLIP correctly identifies target objects >80% |
+| **Visual Grounding** | 20% | CLIP correctly identifies target objects over 80% |
 | **Action Execution** | 25% | Robot successfully completes pick-and-place |
 | **Error Handling** | 10% | Gracefully handles failures (object not found, etc.) |
 | **Integration** | 10% | All components work together end-to-end |
