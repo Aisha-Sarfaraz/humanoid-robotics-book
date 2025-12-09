@@ -71,6 +71,11 @@ const config = {
             label: 'Book',
           },
           {
+            to: '/docs/intro',
+            label: 'Read Book',
+            position: 'left',
+          },
+          {
             href: 'https://github.com/Aisha-Sarfaraz/humanoid-robotics-book',
             label: 'GitHub',
             position: 'right',
@@ -81,20 +86,61 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Documentation',
+            title: 'Book',
             items: [
               {
-                label: 'Book',
+                label: 'Introduction',
                 to: 'docs/intro',
+              },
+              {
+                label: 'Chapter 1: Introduction to Physical AI',
+                to: 'docs/chapter-01/introduction',
+              },
+              {
+                label: 'Chapter 4: Complete Modules',
+                to: 'docs/chapter-04/module-ros2',
+              },
+              {
+                label: 'All Chapters',
+                to: 'docs/category/chapters',
               },
             ],
           },
           {
-            title: 'Community',
+            title: 'Modules',
+            items: [
+              {
+                label: 'Module 1: ROS 2',
+                to: 'docs/chapter-04/module-ros2',
+              },
+              {
+                label: 'Module 2: Simulation',
+                to: 'docs/chapter-04/module-simulation',
+              },
+              {
+                label: 'Module 3: NVIDIA Isaac',
+                to: 'docs/chapter-04/module-isaac',
+              },
+              {
+                label: 'Module 4: VLA Models',
+                to: 'docs/chapter-04/module-vla',
+              },
+            ],
+          },
+          {
+            title: 'Resources',
             items: [
               {
                 label: 'GitHub',
                 href: 'https://github.com/Aisha-Sarfaraz/humanoid-robotics-book',
+              },
+              {
+                label: 'Appendices',
+                to: 'docs/appendices',
+              },
+              {
+                label: 'References',
+                to: 'docs/references',
               },
             ],
           },
