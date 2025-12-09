@@ -76,6 +76,16 @@ const config = {
             position: 'left',
           },
           {
+            to: '/docs/chapter-04/module-ros2',
+            label: 'Learning Modules',
+            position: 'left',
+          },
+          {
+            to: '/docs/category/chapters',
+            label: 'All Chapters',
+            position: 'left',
+          },
+          {
             href: 'https://github.com/Aisha-Sarfaraz/humanoid-robotics-book',
             label: 'GitHub',
             position: 'right',

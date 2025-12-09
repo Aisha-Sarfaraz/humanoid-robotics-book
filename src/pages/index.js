@@ -53,6 +53,9 @@ function HeroSection() {
             <Link to="docs/chapter-04/module-ros2" className="btn btn-secondary">
               Start Learning
             </Link>
+            <Link to="docs/category/chapters" className="btn btn-secondary">
+              All Chapters
+            </Link>
             <a
               href="#features"
               className="btn btn-secondary"
@@ -264,6 +267,9 @@ function CTASection() {
           </Link>
           <Link to="docs/chapter-04/module-ros2" className="btn btn-secondary">
             Start with Modules
+          </Link>
+          <Link to="docs/category/chapters" className="btn btn-secondary">
+            All Chapters
           </Link>
           <Link
             to="https://github.com/Aisha-Sarfaraz/humanoid-robotics-book"
