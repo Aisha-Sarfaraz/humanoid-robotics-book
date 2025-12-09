@@ -44,6 +44,32 @@
   --ifm-background-color: var(--bg-cream);
 }
 
+/* Ensure navbar items are hidden on mobile */
+@media (max-width: 996px) {
+  .navbar__items--center,
+  .navbar__items--right {
+    display: none !important;
+  }
+
+  .navbar__items--left {
+    display: none !important;
+  }
+
+  .navbar__item {
+    display: none !important;
+  }
+
+  .navbar__link {
+    display: none !important;
+  }
+
+  .navbar__toggle {
+    display: block !important;
+    visibility: visible !important;
+    z-index: 1001;
+  }
+}
+
 /* Dark Mode */
 [data-theme='dark'] {
   --primary-violet: #8B5CF6;
@@ -287,6 +313,7 @@ body {
   display: flex !important;
   flex-direction: column;
   padding: 1rem 0;
+  margin-top: 0.5rem; /* Add space below the brand */
 }
 
 .navbar-sidebar .navbar__item {
@@ -1108,27 +1135,47 @@ body {
     display: none;
   }
 
-  /* Ensure navbar items are visible on tablet/mobile */
-  .navbar__items {
-    display: flex !important;
+  /* Hide main navbar items on mobile to show in sidebar */
+  .navbar__items--left,
+  .navbar__items--right,
+  .navbar__items--center {
+    display: none !important;
   }
 
+  /* Ensure navbar toggle is visible on mobile */
   .navbar__toggle {
     display: block !important;
     visibility: visible !important;
-  }
-
-  .navbar__item {
-    display: block !important;
-  }
-
-  .navbar__link {
-    display: block !important;
-    width: 100%;
-    text-align: left;
+    z-index: 1001;
   }
 }
 
+
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-violet);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-purple);
+}
+
+::selection {
+  background: var(--secondary-lime);
+  color: var(--text-dark);
+}
+
+/* Responsive for small mobile screens */
 @media (max-width: 640px) {
   .section {
     padding: 4rem 1.5rem;
@@ -1160,27 +1207,4 @@ body {
     width: 100%;
     justify-content: center;
   }
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 12px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg-cream);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--primary-violet);
-  border-radius: 6px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-purple);
-}
-
-::selection {
-  background: var(--secondary-lime);
-  color: var(--text-dark);
 }

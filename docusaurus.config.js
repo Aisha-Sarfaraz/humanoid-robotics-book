@@ -65,24 +65,13 @@ const config = {
             position: 'left',
           },
           {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
-            position: 'left',
-            label: 'Book',
-          },
-          {
-            to: '/docs/intro',
-            label: 'Read Book',
-            position: 'left',
-          },
-          {
             to: '/docs/chapter-04/module-ros2',
             label: 'Learning Modules',
             position: 'left',
           },
           {
             to: '/docs/category/chapters',
-            label: 'All Chapters',
+            label: 'All Books',
             position: 'left',
           },
           {
