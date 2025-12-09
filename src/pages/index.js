@@ -47,10 +47,7 @@ function HeroSection() {
           </p>
 
           <div className="cta-buttons">
-            <Link to="docs/intro" className="btn btn-primary">
-              Read Book →
-            </Link>
-            <Link to="docs/chapter-04/module-ros2" className="btn btn-secondary">
+            <Link to="docs/chapter-04/module-ros2" className="btn btn-primary">
               Start Learning
             </Link>
             <Link to="docs/category/chapters" className="btn btn-secondary">
@@ -262,10 +259,7 @@ function CTASection() {
           to teaching Physical AI and humanoid robotics.
         </p>
         <div className="cta-buttons" style={{ justifyContent: 'center', gap: '1rem' }}>
-          <Link to="docs/intro" className="btn btn-primary">
-            Read Full Book
-          </Link>
-          <Link to="docs/chapter-04/module-ros2" className="btn btn-secondary">
+          <Link to="docs/chapter-04/module-ros2" className="btn btn-primary">
             Start with Modules
           </Link>
           <Link to="docs/category/chapters" className="btn btn-secondary">
