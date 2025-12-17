@@ -1,0 +1,39 @@
+# Core Framework
+fastapi==0.115.0
+uvicorn==0.32.0
+pydantic==2.9.2
+pydantic-settings==2.6.0
+
+# Database
+sqlalchemy==2.0.35
+asyncpg==0.29.0
+
+# AI/LLM - OpenAI (Fallback)
+openai==1.54.1
+tiktoken==0.8.0
+
+# AI/LLM - Gemini (Primary)
+google-generativeai==0.3.2
+
+# Vector Database
+qdrant-client==1.12.1
+
+# LLM Orchestration
+langchain==0.3.7
+
+# Utilities
+python-multipart==0.0.20
+python-dotenv==1.0.1
+
+# Streaming Support (Server-Sent Events)
+sse-starlette==2.1.0
+
+# Rate Limiting
+slowapi==0.1.9
+
+# Retry Logic
+tenacity==8.2.3
+
+# Background Tasks (Optional - for async re-indexing)
+celery==5.3.4
+redis==5.0.1

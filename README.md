@@ -15,6 +15,7 @@ This academic book provides a comprehensive framework for teaching Physical AI a
 - 🔬 5+ detailed lab exercises with assessment rubrics
 - 🛡️ Comprehensive safety protocols for robotics labs
 - 🌐 Remote learning alternatives for equitable access
+- 🤖 **NEW**: Integrated RAG Chatbot for interactive learning
 
 ## Target Audience
 
@@ -94,12 +95,68 @@ npm run deploy
 | **Recommended** | $15,000 | Full curriculum + edge devices | All modules, optional quadruped robot |
 | **Premium** | $50,000+ | Research-grade | Humanoid robot, advanced sensors |
 
+## RAG Chatbot Integration
+
+This book now features an integrated Retrieval-Augmented Generation (RAG) chatbot that allows students and instructors to ask questions about the book's content and receive contextual responses.
+
+### Features
+
+- **Interactive Q&A**: Ask questions about any chapter or concept in the book
+- **Text Selection Context**: Select text on any page and ask specific questions about it
+- **Source Citations**: Responses include citations to relevant book sections
+- **Conversation History**: Maintains context across multiple questions
+- **Real-time Responses**: Fast, accurate answers powered by AI
+
+### Backend Setup
+
+To run the RAG chatbot backend:
+
+1. Navigate to the backend directory:
+```bash
+cd backend
+```
+
+2. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+3. Set up environment variables by creating a `.env` file:
+```env
+DATABASE_URL=your_neon_postgres_connection_string
+QDRANT_URL=your_qdrant_url
+QDRANT_API_KEY=your_qdrant_api_key
+OPENAI_API_KEY=your_openai_api_key
+```
+
+4. Run the backend server:
+```bash
+python run_backend.py
+```
+
+The backend will start on `http://localhost:8000`.
+
+### Chatbot Usage
+
+- Click the 🤖 button in the bottom-right corner to open the chat interface
+- Type your question about the book content
+- Select text on any page to ask specific questions about that content
+- View source citations in the response for reference
+
 ## Development
 
 ### Project Structure
 
 ```
 humanoid-robotics-book/
+├── backend/                 # FastAPI backend for RAG chatbot
+│   ├── app/                 # Application code
+│   │   ├── models/          # Database models
+│   │   ├── schemas/         # Pydantic schemas
+│   │   ├── services/        # Business logic
+│   │   ├── utils/           # Utility functions
+│   │   └── routers/         # API routes
+│   └── requirements.txt     # Python dependencies
 ├── docs/                    # Book chapters (Markdown)
 │   ├── chapter-01/
 │   ├── chapter-02/
@@ -113,6 +170,8 @@ humanoid-robotics-book/
 ├── specs/                   # Planning documents
 │   └── 001-teaching-physical-ai-robotics-book/
 ├── .specify/                # Spec-Kit Plus templates
+├── src/                     # Frontend components
+│   └── components/          # React components (including ChatInterface)
 ├── docusaurus.config.js     # Docusaurus configuration
 ├── sidebars.js              # Sidebar navigation
 └── package.json             # Dependencies
