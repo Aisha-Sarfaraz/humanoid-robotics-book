@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import './ChatInterface.css';
 
 const ChatInterface = () => {
+  const {siteConfig} = useDocusaurusContext();
+  const BACKEND_URL = siteConfig.customFields.backendUrl;
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -75,7 +78,7 @@ const ChatInterface = () => {
       }
 
       // Create fetch request for streaming
-      const response = await fetch('http://localhost:8000/api/v1/chat/stream', {
+      const response = await fetch(`${BACKEND_URL}/api/v1/chat/stream`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
