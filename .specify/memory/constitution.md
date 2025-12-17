@@ -43,10 +43,10 @@ Rationale for MAJOR version (1.0.0):
 
 ## Project Identity
 
-**Project Name**: Teaching Physical AI & Humanoid Robotics Course
-**Platform**: Docusaurus + Spec-Kit Plus
-**Deployment**: GitHub Pages
-**Primary Tools**: Claude Code, Spec-Kit Plus
+**Project Name**: Teaching Physical AI & Humanoid Robotics Course with Integrated RAG Chatbot
+**Platform**: Docusaurus + FastAPI + Spec-Kit Plus
+**Deployment**: GitHub Pages + Backend API
+**Primary Tools**: Claude Code, Spec-Kit Plus, FastAPI, OpenAI APIs, Qdrant, Neon Postgres
 **Target Audience**: Computer science students and academics
 **Knowledge Level**: Advanced undergraduate/graduate level
 
@@ -95,6 +95,18 @@ Rationale for MAJOR version (1.0.0):
 - **Scope Management**: MUST provide comprehensive coverage within defined boundaries
 
 **Rationale**: Technical education demands precision. Inaccurate or outdated information actively harms student learning and career preparation.
+
+### V. RAG Chatbot Enhancement
+
+**Non-Negotiable Requirements**:
+
+- **Content Fidelity**: Chatbot responses MUST be grounded in actual book content with minimal hallucination
+- **Context Awareness**: System MUST support both full-book queries and text selection-based queries
+- **Response Quality**: Answers MUST maintain the same academic rigor as the original content
+- **Performance**: System MUST respond within 3 seconds under normal load conditions
+- **Integration**: Chatbot MUST integrate seamlessly with existing Docusaurus structure
+
+**Rationale**: The RAG chatbot extends the educational value of the course material by providing interactive access to content while maintaining academic integrity and user experience standards.
 
 ## Content Standards
 
