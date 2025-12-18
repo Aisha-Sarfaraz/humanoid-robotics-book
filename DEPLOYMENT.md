@@ -1,36 +1,46 @@
 # Deployment Guide - RAG Chatbot
 
-This guide explains how to deploy the Humanoid Robotics Book website with the RAG chatbot to production.
+This guide explains how to deploy the Humanoid Robotics Book website with the RAG chatbot to production using Vercel and GitHub Pages.
 
 ## Architecture
 
 - **Frontend**: GitHub Pages (static hosting)
-- **Backend**: Render.com (Python/FastAPI hosting)
+- **Backend**: Vercel (Python/FastAPI serverless)
 - **Vector Database**: Qdrant Cloud (free tier)
 - **LLM**: Gemini API (primary) + OpenAI API (fallback)
 
 ---
 
-## Step 1: Deploy Backend to Render
+## Step 1: Deploy Backend to Vercel
 
-### 1.1 Create Render Account
+### 1.1 Install Vercel CLI (Optional)
 
-1. Go to https://render.com/
-2. Sign up with your GitHub account
-3. Authorize Render to access your repository
+```bash
+npm install -g vercel
+```
 
-### 1.2 Create New Web Service
+### 1.2 Deploy via Vercel Dashboard
 
-1. Click **"New +"** → **"Web Service"**
-2. Connect your GitHub repository: `humanoid-robotics-book`
-3. Render will auto-detect the `render.yaml` configuration file
+1. **Go to Vercel**: https://vercel.com/
+2. **Sign up** with your GitHub account
+3. **Import Project**:
+   - Click **"Add New..."** → **"Project"**
+   - Import your repository: `humanoid-robotics-book`
+   - Vercel will auto-detect the `vercel.json` configuration
+
+4. **Configure Project**:
+   - **Framework Preset**: Other
+   - **Root Directory**: `./` (leave as is)
+   - **Build Command**: Leave empty (serverless function)
+   - **Output Directory**: Leave empty
+   - **Install Command**: `pip install -r backend/requirements.txt`
 
 ### 1.3 Configure Environment Variables
 
-In the Render dashboard, add these environment variables:
+In the Vercel project settings, add these environment variables:
 
 **Required:**
-```
+```env
 GEMINI_API_KEY=your_actual_gemini_api_key
 QDRANT_URL=your_qdrant_cloud_url
 QDRANT_API_KEY=your_qdrant_api_key
@@ -38,12 +48,12 @@ DATABASE_URL=your_postgres_connection_string
 ```
 
 **Optional (for OpenAI fallback):**
-```
+```env
 OPENAI_API_KEY=your_actual_openai_api_key
 ```
 
-**Configuration (already set in render.yaml):**
-```
+**Configuration:**
+```env
 LLM_PROVIDER=gemini
 ENABLE_FALLBACK=true
 GEMINI_EMBEDDING_MODEL=models/text-embedding-004
@@ -54,16 +64,16 @@ QDRANT_COLLECTION_OPENAI=humanoid-robotic-book
 
 ### 1.4 Deploy
 
-1. Click **"Create Web Service"**
-2. Render will automatically:
-   - Install dependencies from `requirements.txt`
-   - Start the FastAPI server
-   - Assign a URL like: `https://humanoid-robotics-rag-backend.onrender.com`
+1. Click **"Deploy"**
+2. Vercel will:
+   - Install dependencies from `backend/requirements.txt`
+   - Deploy the FastAPI app as serverless functions
+   - Assign a URL like: `https://your-project.vercel.app`
 
-3. Wait for deployment to complete (~5-10 minutes)
+3. Wait for deployment to complete (~2-5 minutes)
 4. Test the health endpoint:
    ```
-   https://your-app-name.onrender.com/api/v1/health
+   https://your-project.vercel.app/api/v1/health
    ```
 
 ---
@@ -90,7 +100,7 @@ QDRANT_COLLECTION_OPENAI=humanoid-robotic-book
 2. Create a new secret key
 3. Copy the key
 
-### 2.4 PostgreSQL Database (for Neon Serverless)
+### 2.4 PostgreSQL Database (Neon Serverless)
 
 1. Go to https://neon.tech/
 2. Create a free project
@@ -100,102 +110,55 @@ QDRANT_COLLECTION_OPENAI=humanoid-robotic-book
 
 ## Step 3: Configure Frontend for Production
 
-### 3.1 Update GitHub Pages Deployment
+### 3.1 Update Environment Variable
 
-1. Create a `.env.production` file:
-   ```bash
-   BACKEND_URL=https://your-app-name.onrender.com
-   ```
-
-2. Update `docusaurus.config.js` (already configured):
-   ```javascript
-   customFields: {
-     backendUrl: process.env.BACKEND_URL || 'http://localhost:8000',
-   }
-   ```
-
-### 3.2 GitHub Actions Workflow
-
-Create `.github/workflows/deploy.yml`:
-
-```yaml
-name: Deploy to GitHub Pages
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build website
-        env:
-          BACKEND_URL: ${{ secrets.BACKEND_URL }}
-        run: npm run build
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+Create `.env.production` file in the root:
+```env
+BACKEND_URL=https://your-project.vercel.app
 ```
 
-### 3.3 Add GitHub Secrets
+### 3.2 Add GitHub Secret
 
 1. Go to your GitHub repository
-2. Settings → Secrets and variables → Actions
+2. **Settings** → **Secrets and variables** → **Actions**
 3. Click **"New repository secret"**
 4. Add:
    - Name: `BACKEND_URL`
-   - Value: `https://your-app-name.onrender.com`
+   - Value: `https://your-project.vercel.app`
 
 ---
 
 ## Step 4: Deploy Frontend to GitHub Pages
 
-### 4.1 Enable GitHub Pages
+### 4.1 GitHub Actions Auto-Deploy
 
-1. Go to repository Settings
-2. Pages → Source → GitHub Actions
+The workflow is already configured in `.github/workflows/deploy.yml`. It will:
+- Build the Docusaurus site with your backend URL
+- Deploy to GitHub Pages automatically
 
-### 4.2 Deploy
+### 4.2 Trigger Deployment
 
-**Option A: Manual Deploy**
-```bash
-npm run build
-npm run deploy
-```
-
-**Option B: Automatic (via GitHub Actions)**
+**Option A: Automatic (Recommended)**
 ```bash
 git add .
-git commit -m "feat: configure production deployment"
+git commit -m "feat: configure Vercel backend URL"
 git push origin main
 ```
 
-GitHub Actions will automatically build and deploy.
+GitHub Actions will automatically deploy.
+
+**Option B: Manual**
+1. Go to **Actions** tab
+2. Select **"Deploy to GitHub Pages"**
+3. Click **"Run workflow"**
 
 ---
 
 ## Step 5: Verify Deployment
 
-### 5.1 Check Backend
+### 5.1 Check Backend (Vercel)
 
-1. Visit: `https://your-app-name.onrender.com/api/v1/health`
+1. Visit: `https://your-project.vercel.app/api/v1/health`
 2. Should return:
    ```json
    {
@@ -205,7 +168,7 @@ GitHub Actions will automatically build and deploy.
    }
    ```
 
-### 5.2 Check Frontend
+### 5.2 Check Frontend (GitHub Pages)
 
 1. Visit: `https://aisha-sarfaraz.github.io/humanoid-robotics-book/`
 2. Look for the blue robot button (🤖) in the bottom-right corner
@@ -221,18 +184,21 @@ GitHub Actions will automatically build and deploy.
 
 ---
 
-## Step 6: Configure CORS (if needed)
+## Step 6: Configure CORS
 
-If you get CORS errors, update `backend/app/main.py`:
+The CORS is already configured in `backend/app/main.py` to allow:
+- GitHub Pages domain
+- Localhost for development
+
+If you need to add more origins, update the CORS middleware:
 
 ```python
-from fastapi.middleware.cors import CORSMiddleware
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "https://aisha-sarfaraz.github.io",
-        "http://localhost:3000"
+        "http://localhost:3000",
+        "https://your-custom-domain.com"  # Add your custom domain
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -242,44 +208,104 @@ app.add_middleware(
 
 ---
 
+## Vercel Deployment Tips
+
+### Serverless Function Limits
+
+Vercel Free Tier:
+- **Execution Time**: 10 seconds max per request
+- **Memory**: 1024 MB
+- **Bandwidth**: 100 GB/month
+- **Invocations**: Unlimited
+
+**Note**: Streaming responses work within these limits.
+
+### Environment Variables
+
+- Set in Vercel dashboard: **Project Settings** → **Environment Variables**
+- Can set different values for Production, Preview, and Development
+- Changes require redeployment
+
+### Logs and Monitoring
+
+- View real-time logs: Vercel Dashboard → **Deployments** → **Function Logs**
+- Monitor usage: Vercel Dashboard → **Analytics**
+
+### Custom Domain (Optional)
+
+1. Go to Vercel project settings
+2. **Domains** → **Add Domain**
+3. Follow DNS configuration instructions
+
+---
+
 ## Troubleshooting
 
-### Backend Not Starting on Render
+### Backend Not Starting on Vercel
 
-- Check Render logs: Dashboard → Logs
-- Verify environment variables are set
-- Ensure Python version is 3.13
+**Issue**: Function timeout or build errors
+
+**Solutions**:
+- Check Vercel deployment logs
+- Verify all environment variables are set
+- Ensure `backend/requirements.txt` has all dependencies
+- Python version is compatible (3.9+)
 
 ### Chatbot Button Not Showing
 
+**Issue**: Frontend not loading ChatInterface
+
+**Solutions**:
 - Hard refresh: `Ctrl+Shift+R`
 - Check browser console for errors (F12)
-- Verify `BACKEND_URL` environment variable
+- Verify `BACKEND_URL` is set in GitHub secrets
+- Check GitHub Actions build logs
 
 ### CORS Errors
 
-- Add your GitHub Pages URL to CORS origins
-- Ensure backend is using HTTPS (Render provides this automatically)
+**Issue**: "Access-Control-Allow-Origin" errors
+
+**Solutions**:
+- Verify CORS origins in `backend/app/main.py`
+- Ensure GitHub Pages URL is included
+- Redeploy backend after CORS changes
 
 ### Streaming Not Working
 
-- Check network tab in browser dev tools
-- Verify SSE connection is established
+**Issue**: Response doesn't stream in real-time
+
+**Solutions**:
+- Check network tab: SSE connection should be established
+- Verify backend URL is HTTPS (Vercel provides this)
 - Check backend logs for errors
+- Ensure streaming endpoint is working: `/api/v1/chat/stream`
+
+### API Quota Exceeded
+
+**Issue**: Gemini API returns 429 errors
+
+**Solutions**:
+- Wait for quota reset (15 RPM free tier)
+- Upgrade Gemini API plan
+- Use OpenAI fallback (ensure `OPENAI_API_KEY` is set)
 
 ---
 
 ## Cost Estimate
 
 ### Free Tier Components:
+
 - **GitHub Pages**: Free
-- **Render.com**: 750 hours/month free (enough for 1 service 24/7)
+- **Vercel**: Free tier (100 GB bandwidth/month)
 - **Qdrant Cloud**: 1GB storage free
 - **Neon Serverless**: 0.5GB storage, 3GB data transfer free
 - **Gemini API**: 15 RPM free tier
 
+**Total Cost**: $0/month with free tiers
+
 ### Paid Upgrades (if needed):
-- **Render Pro**: $7/month (faster cold starts, more RAM)
+
+- **Vercel Pro**: $20/month (more bandwidth, priority support)
 - **Qdrant**: $25/month for 2GB+
 - **Neon**: $19/month for higher limits
 - **Gemini API**: Pay-as-you-go after free tier
@@ -288,40 +314,58 @@ app.add_middleware(
 
 ## Monitoring
 
-### Render Dashboard
-- Monitor backend health
-- View request logs
-- Check resource usage
+### Vercel Dashboard
+
+- Monitor function invocations
+- View error logs
+- Check bandwidth usage
+- Analytics for API calls
 
 ### GitHub Actions
+
 - Monitor deployment status
 - View build logs
+- Check deployment history
 
 ### Uptime Monitoring (Optional)
+
 - Use https://uptimerobot.com/ (free)
 - Monitor backend health endpoint
 - Get alerts if service goes down
 
 ---
 
-## Maintenance
+## Updating the Application
 
 ### Updating Backend
+
 ```bash
+# Make changes to backend code
+git add backend/
+git commit -m "fix: update backend logic"
 git push origin main
 ```
-Render auto-deploys on push to main branch.
+
+Vercel auto-deploys on push to main branch.
 
 ### Updating Frontend
+
 ```bash
+# Make changes to frontend code
+git add src/
+git commit -m "feat: update UI"
 git push origin main
 ```
+
 GitHub Actions auto-deploys on push to main branch.
 
 ### Re-indexing Documents
+
 ```bash
-curl -X POST https://your-app-name.onrender.com/api/v1/reindex
+curl -X POST https://your-project.vercel.app/api/v1/reindex
 ```
+
+Or use the API endpoint with your frontend.
 
 ---
 
@@ -330,30 +374,45 @@ curl -X POST https://your-app-name.onrender.com/api/v1/reindex
 1. ✅ Never commit `.env` files
 2. ✅ Use environment variables for all secrets
 3. ✅ Enable rate limiting (already configured)
-4. ✅ Use HTTPS only (Render provides this)
+4. ✅ Use HTTPS only (Vercel provides this automatically)
 5. ✅ Keep dependencies updated
 6. ✅ Monitor API usage and costs
+7. ✅ Set up Vercel environment variables for Production only
+
+---
+
+## Next Steps After Deployment
+
+- [ ] Set up monitoring with UptimeRobot
+- [ ] Configure custom domain (optional)
+- [ ] Add analytics (Google Analytics, Plausible)
+- [ ] Set up automated backups for Qdrant data
+- [ ] Implement usage tracking and rate limit adjustments
+- [ ] Configure Vercel Edge Functions for improved performance (optional)
 
 ---
 
 ## Support
 
 If you encounter issues:
-1. Check Render logs
+
+1. Check Vercel deployment logs
 2. Check GitHub Actions logs
 3. Review browser console errors
 4. Refer to documentation:
-   - Render: https://render.com/docs
+   - Vercel: https://vercel.com/docs
    - Docusaurus: https://docusaurus.io/docs
    - FastAPI: https://fastapi.tiangolo.com/
 
 ---
 
-## Next Steps
+## Quick Start Checklist
 
-After successful deployment:
-- [ ] Set up monitoring with UptimeRobot
-- [ ] Configure custom domain (optional)
-- [ ] Add analytics (Google Analytics, Plausible)
-- [ ] Set up automated backups for Qdrant data
-- [ ] Implement usage tracking and rate limit adjustments
+- [ ] Deploy backend to Vercel
+- [ ] Add environment variables in Vercel
+- [ ] Get backend URL from Vercel
+- [ ] Add `BACKEND_URL` to GitHub Secrets
+- [ ] Push to main branch (triggers auto-deploy)
+- [ ] Test chatbot on GitHub Pages
+
+**Deployment Complete! 🎉**
