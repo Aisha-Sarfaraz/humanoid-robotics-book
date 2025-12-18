@@ -25,6 +25,8 @@ jobs:
         run: npm ci
 
       - name: Build website
+        env:
+          BACKEND_URL: ${{ secrets.BACKEND_URL }}
         run: |
           echo "Building Docusaurus site..."
           npm run build --verbose
