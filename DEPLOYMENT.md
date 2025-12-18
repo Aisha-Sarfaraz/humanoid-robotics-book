@@ -1,43 +1,35 @@
 # Deployment Guide - RAG Chatbot
 
-This guide explains how to deploy the Humanoid Robotics Book website with the RAG chatbot to production using Vercel and GitHub Pages.
+This guide explains how to deploy the Humanoid Robotics Book website with the RAG chatbot to production using Replit and GitHub Pages.
 
 ## Architecture
 
 - **Frontend**: GitHub Pages (static hosting)
-- **Backend**: Vercel (Python/FastAPI serverless)
+- **Backend**: Replit (Python/FastAPI container hosting)
 - **Vector Database**: Qdrant Cloud (free tier)
 - **LLM**: Gemini API (primary) + OpenAI API (fallback)
 
 ---
 
-## Step 1: Deploy Backend to Vercel
+## Step 1: Deploy Backend to Replit
 
-### 1.1 Install Vercel CLI (Optional)
+### 1.1 Sign Up for Replit
 
-```bash
-npm install -g vercel
-```
+1. **Go to Replit**: https://replit.com/
+2. **Sign up** with your GitHub account (free, no credit card required)
+3. Verify your email if prompted
 
-### 1.2 Deploy via Vercel Dashboard
+### 1.2 Import Your Repository
 
-1. **Go to Vercel**: https://vercel.com/
-2. **Sign up** with your GitHub account
-3. **Import Project**:
-   - Click **"Add New..."** → **"Project"**
-   - Import your repository: `humanoid-robotics-book`
-   - Vercel will auto-detect the `vercel.json` configuration
+1. Click **"+ Create Repl"**
+2. Select **"Import from GitHub"**
+3. Paste your repository URL: `https://github.com/Aisha-Sarfaraz/humanoid-robotics-book`
+4. Replit will import the repository
+5. Click **"Import from GitHub"** to confirm
 
-4. **Configure Project**:
-   - **Framework Preset**: Other
-   - **Root Directory**: `./` (leave as is)
-   - **Build Command**: Leave empty (serverless function)
-   - **Output Directory**: Leave empty
-   - **Install Command**: `pip install -r backend/requirements.txt`
+### 1.3 Configure Environment Variables (Secrets)
 
-### 1.3 Configure Environment Variables
-
-In the Vercel project settings, add these environment variables:
+In your Repl, click the **"Secrets"** tab (🔒 icon in left sidebar) and add these environment variables:
 
 **Required:**
 ```env
@@ -62,18 +54,24 @@ QDRANT_COLLECTION_GEMINI=humanoid-robotics-gemini
 QDRANT_COLLECTION_OPENAI=humanoid-robotic-book
 ```
 
-### 1.4 Deploy
+### 1.4 Start the Backend
 
-1. Click **"Deploy"**
-2. Vercel will:
-   - Install dependencies from `backend/requirements.txt`
-   - Deploy the FastAPI app as serverless functions
-   - Assign a URL like: `https://your-project.vercel.app`
-
-3. Wait for deployment to complete (~2-5 minutes)
-4. Test the health endpoint:
+1. **Create `.replit` file** in the root directory with:
+   ```toml
+   run = "cd backend && pip install -r requirements.txt && uvicorn app.main:app --host 0.0.0.0 --port 8000"
    ```
-   https://your-project.vercel.app/api/v1/health
+
+2. **Click the "Run" button** (▶️ at the top)
+3. Replit will:
+   - Install dependencies from `backend/requirements.txt`
+   - Start the FastAPI app on port 8000
+   - Assign a URL like: `https://[repl-id].replit.dev`
+
+4. Wait for server to start (~1-2 minutes)
+5. Copy your Repl URL (shown in the webview pane)
+6. Test the health endpoint:
+   ```
+   https://[your-repl-url]/api/v1/health
    ```
 
 ---
@@ -114,7 +112,7 @@ QDRANT_COLLECTION_OPENAI=humanoid-robotic-book
 
 Create `.env.production` file in the root:
 ```env
-BACKEND_URL=https://your-project.vercel.app
+BACKEND_URL=https://[your-repl-url]
 ```
 
 ### 3.2 Add GitHub Secret
@@ -124,7 +122,7 @@ BACKEND_URL=https://your-project.vercel.app
 3. Click **"New repository secret"**
 4. Add:
    - Name: `BACKEND_URL`
-   - Value: `https://your-project.vercel.app`
+   - Value: `https://[your-repl-url]` (your Replit backend URL)
 
 ---
 
@@ -156,9 +154,9 @@ GitHub Actions will automatically deploy.
 
 ## Step 5: Verify Deployment
 
-### 5.1 Check Backend (Vercel)
+### 5.1 Check Backend (Replit)
 
-1. Visit: `https://your-project.vercel.app/api/v1/health`
+1. Visit: `https://[your-repl-url]/api/v1/health`
 2. Should return:
    ```json
    {
@@ -208,48 +206,66 @@ app.add_middleware(
 
 ---
 
-## Vercel Deployment Tips
+## Replit Deployment Tips
 
-### Serverless Function Limits
+### Free Tier Limitations
 
-Vercel Free Tier:
-- **Execution Time**: 10 seconds max per request
-- **Memory**: 1024 MB
-- **Bandwidth**: 100 GB/month
-- **Invocations**: Unlimited
+Replit Free Tier (Hacker Plan):
+- **Always-On**: No (Repl sleeps after inactivity)
+- **Auto-Wake**: Yes (wakes up on request, ~5-10 seconds delay)
+- **Memory**: 500 MB
+- **Storage**: 500 MB
+- **Bandwidth**: Unlimited
 
-**Note**: Streaming responses work within these limits.
+**Note**: Streaming responses work perfectly. First request after sleep may take a few seconds.
 
-### Environment Variables
+### Keep Repl Always On (Optional)
 
-- Set in Vercel dashboard: **Project Settings** → **Environment Variables**
-- Can set different values for Production, Preview, and Development
-- Changes require redeployment
+**Option A: UptimeRobot (Free)**
+1. Sign up at https://uptimerobot.com/
+2. Add monitor: `https://[your-repl-url]/api/v1/health`
+3. Set interval to 5 minutes
+4. This pings your Repl to keep it awake
+
+**Option B: Upgrade to Replit Hacker Plan** ($7/month)
+- Always-on Repls
+- More resources
+- Faster performance
+
+### Environment Variables (Secrets)
+
+- Set in Replit: **Secrets tab** (🔒 icon)
+- Automatically available to your app
+- Secured and encrypted
+- Changes take effect immediately (restart Repl)
 
 ### Logs and Monitoring
 
-- View real-time logs: Vercel Dashboard → **Deployments** → **Function Logs**
-- Monitor usage: Vercel Dashboard → **Analytics**
+- View real-time logs in the **Console** tab
+- Monitor resource usage in Repl dashboard
+- Check errors in the output pane
 
-### Custom Domain (Optional)
+### Custom Domain (Optional - Requires Paid Plan)
 
-1. Go to Vercel project settings
-2. **Domains** → **Add Domain**
-3. Follow DNS configuration instructions
+1. Upgrade to Replit Hacker Plan
+2. Go to Repl settings
+3. **Domains** → **Add Custom Domain**
+4. Follow DNS configuration instructions
 
 ---
 
 ## Troubleshooting
 
-### Backend Not Starting on Vercel
+### Backend Not Starting on Replit
 
-**Issue**: Function timeout or build errors
+**Issue**: Server crashes or fails to start
 
 **Solutions**:
-- Check Vercel deployment logs
-- Verify all environment variables are set
+- Check Console tab for error messages
+- Verify all Secrets are set correctly
 - Ensure `backend/requirements.txt` has all dependencies
-- Python version is compatible (3.9+)
+- Restart the Repl (click Stop then Run)
+- Check if port 8000 is available
 
 ### Chatbot Button Not Showing
 
@@ -276,9 +292,11 @@ Vercel Free Tier:
 
 **Solutions**:
 - Check network tab: SSE connection should be established
-- Verify backend URL is HTTPS (Vercel provides this)
-- Check backend logs for errors
+- Verify backend URL is HTTPS (Replit provides this)
+- Wait 5-10 seconds if Repl was sleeping (first request slower)
+- Check Console tab in Replit for errors
 - Ensure streaming endpoint is working: `/api/v1/chat/stream`
+- Restart the Repl if needed
 
 ### API Quota Exceeded
 
@@ -296,7 +314,7 @@ Vercel Free Tier:
 ### Free Tier Components:
 
 - **GitHub Pages**: Free
-- **Vercel**: Free tier (100 GB bandwidth/month)
+- **Replit**: Free tier (auto-sleep, 500MB RAM/storage)
 - **Qdrant Cloud**: 1GB storage free
 - **Neon Serverless**: 0.5GB storage, 3GB data transfer free
 - **Gemini API**: 15 RPM free tier
@@ -305,21 +323,22 @@ Vercel Free Tier:
 
 ### Paid Upgrades (if needed):
 
-- **Vercel Pro**: $20/month (more bandwidth, priority support)
+- **Replit Hacker**: $7/month (always-on, more resources, custom domain)
 - **Qdrant**: $25/month for 2GB+
 - **Neon**: $19/month for higher limits
 - **Gemini API**: Pay-as-you-go after free tier
+- **UptimeRobot Pro**: $7/month (1-minute intervals, more monitors)
 
 ---
 
 ## Monitoring
 
-### Vercel Dashboard
+### Replit Dashboard
 
-- Monitor function invocations
-- View error logs
-- Check bandwidth usage
-- Analytics for API calls
+- Monitor Repl status (running/sleeping)
+- View Console logs in real-time
+- Check resource usage (CPU, memory)
+- Monitor active connections
 
 ### GitHub Actions
 
@@ -327,11 +346,13 @@ Vercel Free Tier:
 - View build logs
 - Check deployment history
 
-### Uptime Monitoring (Optional)
+### Uptime Monitoring (Recommended for Free Tier)
 
-- Use https://uptimerobot.com/ (free)
-- Monitor backend health endpoint
-- Get alerts if service goes down
+- **UptimeRobot** (https://uptimerobot.com/) - Free
+  - Add monitor: `https://[your-repl-url]/api/v1/health`
+  - Interval: 5 minutes
+  - Keeps Repl awake and monitors availability
+  - Get email alerts if service goes down
 
 ---
 
@@ -339,14 +360,23 @@ Vercel Free Tier:
 
 ### Updating Backend
 
-```bash
-# Make changes to backend code
-git add backend/
-git commit -m "fix: update backend logic"
-git push origin main
-```
+**Option A: Update via Git (Recommended)**
+1. Make changes to backend code locally
+2. Push to GitHub:
+   ```bash
+   git add backend/
+   git commit -m "fix: update backend logic"
+   git push origin main
+   ```
+3. In Replit, pull the latest changes:
+   - Open the Shell tab in Replit
+   - Run: `git pull origin main`
+   - Restart the Repl (click Stop then Run)
 
-Vercel auto-deploys on push to main branch.
+**Option B: Edit Directly in Replit**
+1. Make changes in Replit's code editor
+2. Changes auto-save
+3. Restart the Repl to apply changes
 
 ### Updating Frontend
 
@@ -362,7 +392,7 @@ GitHub Actions auto-deploys on push to main branch.
 ### Re-indexing Documents
 
 ```bash
-curl -X POST https://your-project.vercel.app/api/v1/reindex
+curl -X POST https://[your-repl-url]/api/v1/reindex
 ```
 
 Or use the API endpoint with your frontend.
@@ -372,23 +402,24 @@ Or use the API endpoint with your frontend.
 ## Security Best Practices
 
 1. ✅ Never commit `.env` files
-2. ✅ Use environment variables for all secrets
+2. ✅ Use Replit Secrets for all API keys and credentials
 3. ✅ Enable rate limiting (already configured)
-4. ✅ Use HTTPS only (Vercel provides this automatically)
+4. ✅ Use HTTPS only (Replit provides this automatically)
 5. ✅ Keep dependencies updated
 6. ✅ Monitor API usage and costs
-7. ✅ Set up Vercel environment variables for Production only
+7. ✅ Don't expose Secrets in code or logs
+8. ✅ Regularly review Replit Console logs for suspicious activity
 
 ---
 
 ## Next Steps After Deployment
 
-- [ ] Set up monitoring with UptimeRobot
-- [ ] Configure custom domain (optional)
+- [ ] Set up monitoring with UptimeRobot (keeps Repl awake + alerts)
+- [ ] Configure custom domain (requires Replit Hacker plan)
 - [ ] Add analytics (Google Analytics, Plausible)
 - [ ] Set up automated backups for Qdrant data
 - [ ] Implement usage tracking and rate limit adjustments
-- [ ] Configure Vercel Edge Functions for improved performance (optional)
+- [ ] Consider upgrading to Replit Hacker for always-on hosting ($7/month)
 
 ---
 
@@ -396,11 +427,13 @@ Or use the API endpoint with your frontend.
 
 If you encounter issues:
 
-1. Check Vercel deployment logs
+1. Check Replit Console tab for errors
 2. Check GitHub Actions logs
-3. Review browser console errors
-4. Refer to documentation:
-   - Vercel: https://vercel.com/docs
+3. Review browser console errors (F12)
+4. Verify all Secrets are set correctly
+5. Restart the Repl
+6. Refer to documentation:
+   - Replit: https://docs.replit.com/
    - Docusaurus: https://docusaurus.io/docs
    - FastAPI: https://fastapi.tiangolo.com/
 
@@ -408,11 +441,14 @@ If you encounter issues:
 
 ## Quick Start Checklist
 
-- [ ] Deploy backend to Vercel
-- [ ] Add environment variables in Vercel
-- [ ] Get backend URL from Vercel
+- [x] Sign up for Replit (free, no credit card)
+- [x] Import repository to Replit
+- [x] Add all Secrets (13 environment variables)
+- [x] Run the backend (click Run button)
+- [x] Get backend URL from Replit
 - [ ] Add `BACKEND_URL` to GitHub Secrets
 - [ ] Push to main branch (triggers auto-deploy)
 - [ ] Test chatbot on GitHub Pages
+- [ ] Optional: Set up UptimeRobot to keep Repl awake
 
 **Deployment Complete! 🎉**
