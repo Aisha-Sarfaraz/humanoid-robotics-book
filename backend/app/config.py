@@ -74,7 +74,7 @@ class Settings(BaseSettings):
         "http://localhost:3001",
         "http://localhost:8080",
         "http://localhost:5173",  # Vite default port
-        "https://aisha-sarfaraz.github.io/humanoid-robotics-book/",  # Example production URL
+        "https://aisha-sarfaraz.github.io",  # GitHub Pages origin
     ]
 
 
