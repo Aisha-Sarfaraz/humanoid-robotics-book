@@ -1,3 +1,14 @@
+---
+title: Humanoid Robotics RAG API
+emoji: 🤖
+colorFrom: blue
+colorTo: purple
+sdk: docker
+pinned: false
+license: cc-by-nc-sa-4.0
+app_port: 7860
+---
+
 # Humanoid Robotics Book RAG Chatbot API
 
 This is the backend API for the Humanoid Robotics Book RAG chatbot, built with FastAPI.
